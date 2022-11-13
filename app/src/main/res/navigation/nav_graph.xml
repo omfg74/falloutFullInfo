@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/MainFragment"
         android:name="com.omfgdevelop.falloutfullinfo.presentation.MainFragment"
-        android:label="@string/wellcome_to_fallout_full_info"
+        android:label="@string/welcome_to_fallout_full_info"
         tools:layout="@layout/fragment_main">
 
         <!--        <action-->
