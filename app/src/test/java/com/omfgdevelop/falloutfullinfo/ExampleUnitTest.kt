@@ -1,4 +1,4 @@
-package com.example.falloutfullinfo
+package com.omfgdevelop.falloutfullinfo
 
 import org.junit.Test
 

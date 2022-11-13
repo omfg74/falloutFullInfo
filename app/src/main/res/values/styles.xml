@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GreenTextFallout.20" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#00FF00</item>
+        <item name="font">@font/fallout</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="GreenTextFallout.Dark.20" parent="GreenTextFallout.20">
+        <item name="android:textColor">#8300FF00</item>
+    </style>
+
+    <style name="GreenTextFallout.Dark.16" parent="GreenTextFallout.Dark.20">
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>

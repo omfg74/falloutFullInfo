@@ -1,4 +1,4 @@
-package com.example.falloutfullinfo
+package com.omfgdevelop.falloutfullinfo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.falloutfullinfo", appContext.packageName)
+        assertEquals("com.omfgdevelop.falloutfullinfo", appContext.packageName)
     }
 }
