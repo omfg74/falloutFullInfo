@@ -20,14 +20,3 @@ class MainFragmentViewModel(
 
 
 }
-
-class MainViewModelFactory(
-    private val application: Application
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainFragmentViewModel::class.java)) {
-            return MainFragmentViewModel(application) as T
-        }
-        throw java.lang.RuntimeException("Unknown view model class $modelClass")
-    }
-}

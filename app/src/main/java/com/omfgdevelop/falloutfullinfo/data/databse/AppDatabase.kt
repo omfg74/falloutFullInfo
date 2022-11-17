@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.omfgdevelop.falloutfullinfo.domian.entity.Category
+import com.omfgdevelop.falloutfullinfo.domian.entity.CategoryDao
 import com.omfgdevelop.falloutfullinfo.domian.entity.Game
 import com.omfgdevelop.falloutfullinfo.domian.entity.GameDao
 
-@Database(entities = arrayOf(Game::class), version = 1)
+@Database(entities = arrayOf(Game::class, Category::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao
+    abstract fun categoryDao(): CategoryDao
 
     companion object {
         @Volatile
