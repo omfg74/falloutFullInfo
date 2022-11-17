@@ -5,15 +5,13 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.navigateUp
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omfgdevelop.falloutfullinfo.MainActivity
@@ -64,6 +62,15 @@ class CategoryFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         setToolBar()
         setViews()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.category.observe(
+            viewLifecycleOwner
+        ) {
+                t -> rvAdapter.submitList(t)
+        }
     }
 
     private fun setToolBar() {
@@ -76,7 +83,6 @@ class CategoryFragment : Fragment() {
                 }
             }
         }
-
     }
 
 
@@ -94,21 +100,11 @@ class CategoryFragment : Fragment() {
                                 findViewById<TextView>(R.id.tv_category_name).text = item.name
 
                                 holder.itemView.setOnClickListener {
-                                    lifecycle.coroutineScope.launch {
-                                        viewModel?.getCategory(item.id)?.collect() {
-                                            rvAdapter.submitList(
-                                                it
-                                            )
-                                        }
-                                    }
+                                    viewModel?.getCategory(item.id)
                                 }
                             }
                         }) {}.apply {
-                        lifecycle.coroutineScope.launch {
-                            viewModel?.getCategory(null)?.collect() {
-                                submitList(it)
-                            }
-                        }
+                        viewModel?.getCategory(null)
                     }
                 adapter = rvAdapter
             }
@@ -127,8 +123,8 @@ class CategoryFragment : Fragment() {
             true // default to enabled
         ) {
             override fun handleOnBackPressed() {
+
                 handleBackAction()
-                findNavController().popBackStack()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -138,7 +134,10 @@ class CategoryFragment : Fragment() {
     }
 
     private fun handleBackAction() {
-        Toast.makeText(requireContext(), "on back pressed dispatcherr", Toast.LENGTH_SHORT)
-            .show()
+        if (viewModel.parentCategoryId != null) {
+            viewModel.getParentCategory()
+        } else {
+            findNavController().popBackStack()
+        }
     }
 }
