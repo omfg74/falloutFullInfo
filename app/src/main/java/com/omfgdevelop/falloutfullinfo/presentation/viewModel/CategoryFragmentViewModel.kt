@@ -21,25 +21,32 @@ class CategoryFragmentViewModel(application: Application) : AndroidViewModel(app
     val currentId: Long?
         get() = _currentId
 
+    private var _parentCategory: MutableLiveData<Category?> = MutableLiveData()
+    val parentCategory: LiveData<Category?>
+        get() = _parentCategory
+
+    var gameType: Long = 0
+
     private val repository = (application as App).dataBase.categoryDao()
 
     private val gameRepository = (application as App).dataBase.gameDao()
 
-    private val _category: MutableLiveData<List<Category>> = MutableLiveData()
+    private val _curretCategory: MutableLiveData<List<Category>> = MutableLiveData()
 
-    val category: LiveData<List<Category>>
-        get() = _category
+    val currentCategory: LiveData<List<Category>>
+        get() = _curretCategory
 
 
-    fun getCategory(id: Long?) {
-        _currentId = id;
+    fun getChildCategory(category: Category?) {
+        _currentId = category?.category?.id;
+        _parentCategory.value = category;
         viewModelScope.launch {
-            repository.getCategoryList(id).collect() {
-                _category.value = it
+            repository.getChildCategoryList(category?.category?.id, gameType).collect() {
+                _curretCategory.value = it
                 //todo check if exists
-                if (it.isNotEmpty()) {
-                    _parentCategoryId = it[0].parentId
-                } else _parentCategoryId = currentId
+                _parentCategoryId = if (it.isNotEmpty()) {
+                    it[0].category.parentId
+                } else currentId
             }
         }
 
@@ -48,12 +55,19 @@ class CategoryFragmentViewModel(application: Application) : AndroidViewModel(app
 
     fun getSelectedGame(gameId: Long): Flow<Game> = gameRepository.findGameById(gameId)
 
-    fun getParentCategory() {
+    fun getLoadBack() {
         viewModelScope.launch {
-            repository.getParentCategory(parentCategoryId).collect() {
-                getCategory(it.parentId)
+            repository.getCategoryById(_parentCategory.value?.category?.id, gameType).collect() {
+                _parentCategory.value = it
+                viewModelScope.launch {
+                    repository.getCategoryById(it.category.parentId, gameType).collect() {
+                        getChildCategory(it)
+                    }
+                }
             }
         }
     }
+
+
 }
 

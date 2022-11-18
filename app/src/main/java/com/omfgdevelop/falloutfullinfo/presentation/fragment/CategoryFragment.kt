@@ -7,7 +7,6 @@ import android.view.*
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
@@ -60,27 +59,40 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.gameType = args.gameId
         setToolBar()
         setViews()
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        viewModel.category.observe(
+        viewModel.currentCategory.observe(
             viewLifecycleOwner
-        ) {
-                t -> rvAdapter.submitList(t)
+        ) { t ->
+            rvAdapter.submitList(t)
         }
     }
+
 
     private fun setToolBar() {
         toolbar = (requireActivity() as MainActivity).supportActionBar
             ?: throw java.lang.RuntimeException("Toolbar not found")
+
+        viewModel.parentCategory.observe(viewLifecycleOwner) {
+            setToolBarTitle(name = it?.category?.name)
+        }
+    }
+
+    private fun setToolBarTitle(name: String?) {
         with(toolbar) {
-            lifecycle.coroutineScope.launch {
-                viewModel.getSelectedGame(args.gameId).collect() {
-                    title = it.name
+            if (name == null) {
+                lifecycle.coroutineScope.launch {
+                    viewModel.getSelectedGame(args.gameId).collect() {
+                        title = it.name
+                    }
                 }
+            } else {
+                title = name
             }
         }
     }
@@ -97,20 +109,27 @@ class CategoryFragment : Fragment() {
                         R.layout.item_category,
                         bind = { item, holder, itemCount ->
                             with(holder.itemView) {
-                                findViewById<TextView>(R.id.tv_category_name).text = item.name
+                                findViewById<TextView>(R.id.tv_category_name).text = item.category.name
 
                                 holder.itemView.setOnClickListener {
-                                    viewModel?.getCategory(item.id)
+//                                    if (item.game.childType == ChildType.CATEGORY) {
+                                        viewModel?.getChildCategory(item)
+//                                    } else {
+//                                        navigateToItemFragment();
+//                                    }
                                 }
                             }
                         }) {}.apply {
-                        viewModel?.getCategory(null)
+                        viewModel?.getChildCategory(null)
                     }
                 adapter = rvAdapter
             }
         }
     }
 
+    fun navigateToItemFragment() {
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -135,7 +154,7 @@ class CategoryFragment : Fragment() {
 
     private fun handleBackAction() {
         if (viewModel.parentCategoryId != null) {
-            viewModel.getParentCategory()
+            viewModel.getLoadBack()
         } else {
             findNavController().popBackStack()
         }

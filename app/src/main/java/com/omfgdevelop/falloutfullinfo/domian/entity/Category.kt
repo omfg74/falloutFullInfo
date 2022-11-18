@@ -1,18 +1,25 @@
 package com.omfgdevelop.falloutfullinfo.domian.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.Embedded
+import androidx.room.Junction
+import androidx.room.Relation
 
-@Entity(tableName = "category")
 data class Category(
-    @ColumnInfo(name = "id")
-    @PrimaryKey
-    val id: Long,
-    @ColumnInfo(name = "name")
-    val name: String,
-    @ColumnInfo(name = "parent_id")
-    val parentId: Long?,
-    @ColumnInfo(name="game_id")
-    val gameId:Long?
+    @Embedded
+    val category: CategoryEntity,
+
+//    @Relation(
+//        parentColumn = "id",
+//        entityColumn = "game_id",
+//        associateBy = Junction(CategoryToGame::class)
+//    )
+//    val game: Game,
+    @Relation(
+        parentColumn = "category_id",
+        entityColumn = "category_id",
+        associateBy = Junction(CategoryToGame::class)
+    )
+    val childType: CategoryToGame
+
+
 )
