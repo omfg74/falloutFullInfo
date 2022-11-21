@@ -12,6 +12,9 @@ class ViewModelFactory(val application: Application) : ViewModelProvider.Factory
         if (modelClass.isAssignableFrom(CategoryFragmentViewModel::class.java)) {
             return CategoryFragmentViewModel(application) as T
         }
+        if (modelClass.isAssignableFrom(SkillListViewModel::class.java)) {
+            return SkillListViewModel(application) as T
+        }
         throw java.lang.RuntimeException("Unknown view model class $modelClass")
     }
 }

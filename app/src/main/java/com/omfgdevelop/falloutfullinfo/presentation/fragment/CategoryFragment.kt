@@ -7,7 +7,6 @@ import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
@@ -25,28 +24,17 @@ import com.omfgdevelop.falloutfullinfo.presentation.viewModel.ViewModelFactory
 import kotlinx.coroutines.launch
 
 
-class CategoryFragment : Fragment() {
+class CategoryFragment :
+    BaseToolbarFragment<CategoryFragmentViewModel, FragmentCategoryBinding>(
+        CategoryFragmentViewModel::class.java
+    ) {
 
-    private var _binding: FragmentCategoryBinding? = null
 
     private val args by navArgs<CategoryFragmentArgs>()
 
     private lateinit var rvAdapter: GenericListAdapter<Category>
 
-    private val binding: FragmentCategoryBinding
-        get() = _binding ?: throw java.lang.RuntimeException("binding is null")
-
     private lateinit var recyclerView: RecyclerView
-
-    private lateinit var toolbar: androidx.appcompat.app.ActionBar
-
-    private val viewModelFactory by lazy {
-        ViewModelFactory(requireActivity().application)
-    }
-
-    private val viewModel: CategoryFragmentViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)[CategoryFragmentViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,12 +46,10 @@ class CategoryFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.gameType = args.gameId
-        setToolBar()
-        setViews()
+        super.onViewCreated(view, savedInstanceState)
         observeViewModel()
     }
 
@@ -75,11 +61,8 @@ class CategoryFragment : Fragment() {
         }
     }
 
-
-    private fun setToolBar() {
-        toolbar = (requireActivity() as MainActivity).supportActionBar
-            ?: throw java.lang.RuntimeException("Toolbar not found")
-
+    override fun setToolBar() {
+        super.setToolBar()
         viewModel.parentCategory.observe(viewLifecycleOwner) {
             setToolBarTitle(name = it?.category?.name)
         }
@@ -100,7 +83,7 @@ class CategoryFragment : Fragment() {
     }
 
 
-    private fun setViews() {
+    override fun setViews() {
         with(binding) {
             recyclerView = rvCategory
             with(recyclerView) {
@@ -131,31 +114,10 @@ class CategoryFragment : Fragment() {
     }
 
     fun navigateToItemFragment() {
-Toast.makeText(requireContext(),"Navigate to item",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Navigate to item", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val callback: OnBackPressedCallback = object : OnBackPressedCallback(
-            true // default to enabled
-        ) {
-            override fun handleOnBackPressed() {
-
-                handleBackAction()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,  // LifecycleOwner
-            callback
-        )
-    }
-
-    private fun handleBackAction() {
+    override fun handleBackAction() {
         if (viewModel.parentCategoryId != null) {
             viewModel.getLoadBack()
         } else {

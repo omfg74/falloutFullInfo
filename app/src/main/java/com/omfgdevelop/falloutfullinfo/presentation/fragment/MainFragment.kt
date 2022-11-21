@@ -31,7 +31,6 @@ class MainFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
 
-
     private val viewModelFactory by lazy {
         ViewModelFactory(requireActivity().application)
     }

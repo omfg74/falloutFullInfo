@@ -6,4 +6,5 @@
     <color name="monitor_green_dark">#8300FF00</color>
     <color name="monitor_green_background_dark_1_percent">#0300FF00</color>
     <color name="monitor_green_background_dark_5_percent">#0D00FF00</color>
+    <color name="monitor_green_background_dark_20_percent">#3300FF00</color>
 </resources>
