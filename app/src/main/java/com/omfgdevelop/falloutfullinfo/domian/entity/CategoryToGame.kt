@@ -13,5 +13,5 @@ data class CategoryToGame(
     val categoryId: Long,
 
     @ColumnInfo(name = "child_type", defaultValue = "0")
-    val childType: Long = 0
+    val childType: Long
 )

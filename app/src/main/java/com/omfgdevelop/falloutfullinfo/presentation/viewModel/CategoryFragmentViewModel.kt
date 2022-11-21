@@ -31,19 +31,18 @@ class CategoryFragmentViewModel(application: Application) : AndroidViewModel(app
 
     private val gameRepository = (application as App).dataBase.gameDao()
 
-    private val _curretCategory: MutableLiveData<List<Category>> = MutableLiveData()
+    private val _currentCategory: MutableLiveData<List<Category>> = MutableLiveData()
 
     val currentCategory: LiveData<List<Category>>
-        get() = _curretCategory
+        get() = _currentCategory
 
 
     fun getChildCategory(category: Category?) {
-        _currentId = category?.category?.id;
-        _parentCategory.value = category;
+        _currentId = category?.category?.id
+        _parentCategory.value = category
         viewModelScope.launch {
             repository.getChildCategoryList(category?.category?.id, gameType).collect() {
-                _curretCategory.value = it
-                //todo check if exists
+                _currentCategory.value = it
                 _parentCategoryId = if (it.isNotEmpty()) {
                     it[0].category.parentId
                 } else currentId

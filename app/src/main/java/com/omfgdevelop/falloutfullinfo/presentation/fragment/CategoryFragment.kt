@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import com.omfgdevelop.falloutfullinfo.MainActivity
 import com.omfgdevelop.falloutfullinfo.R
 import com.omfgdevelop.falloutfullinfo.databinding.FragmentCategoryBinding
 import com.omfgdevelop.falloutfullinfo.domian.entity.Category
+import com.omfgdevelop.falloutfullinfo.domian.entity.ChildType
 import com.omfgdevelop.falloutfullinfo.presentation.view.adapter.GenericListAdapter
 import com.omfgdevelop.falloutfullinfo.presentation.viewModel.CategoryFragmentViewModel
 import com.omfgdevelop.falloutfullinfo.presentation.viewModel.ViewModelFactory
@@ -109,14 +111,15 @@ class CategoryFragment : Fragment() {
                         R.layout.item_category,
                         bind = { item, holder, itemCount ->
                             with(holder.itemView) {
-                                findViewById<TextView>(R.id.tv_category_name).text = item.category.name
+                                findViewById<TextView>(R.id.tv_category_name).text =
+                                    item.category.name
 
                                 holder.itemView.setOnClickListener {
-//                                    if (item.game.childType == ChildType.CATEGORY) {
+                                    if (item.childType == ChildType.CATEGORY) {
                                         viewModel?.getChildCategory(item)
-//                                    } else {
-//                                        navigateToItemFragment();
-//                                    }
+                                    } else {
+                                        navigateToItemFragment()
+                                    }
                                 }
                             }
                         }) {}.apply {
@@ -128,7 +131,7 @@ class CategoryFragment : Fragment() {
     }
 
     fun navigateToItemFragment() {
-
+Toast.makeText(requireContext(),"Navigate to item",Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

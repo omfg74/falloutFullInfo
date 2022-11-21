@@ -10,10 +10,10 @@ abstract class CategoryDao {
     @Transaction
     @Query(
         """
-select distinct  *
+select distinct  c.category_id, c.name, c.parent_id, ctg.game_id,ctg.child_type
 from Category  c 
-inner JOIN category_to_game ctg  on c.category_id=ctg.category_id
-where c.parent_id is  :id
+inner JOIN category_to_game ctg  on c.category_id=ctg.category_id 
+where c.parent_id is :id
 AND ctg.game_id = :gameId
         """
     )

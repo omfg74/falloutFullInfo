@@ -8,11 +8,10 @@ import androidx.room.PrimaryKey
 data class Game(
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id", index = true)
+    @ColumnInfo(name = "game_id", index = true)
     val id: Long,
 
     @ColumnInfo(name = "name")
-    val name: String?
-) {
+    val name: String
+)
 
-}
