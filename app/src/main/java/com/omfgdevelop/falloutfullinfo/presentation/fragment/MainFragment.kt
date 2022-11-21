@@ -1,16 +1,17 @@
-package com.omfgdevelop.falloutfullinfo.presentation
+package com.omfgdevelop.falloutfullinfo.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omfgdevelop.falloutfullinfo.R
@@ -18,8 +19,9 @@ import com.omfgdevelop.falloutfullinfo.databinding.FragmentMainBinding
 import com.omfgdevelop.falloutfullinfo.domian.entity.Game
 import com.omfgdevelop.falloutfullinfo.presentation.view.adapter.GenericListAdapter
 import com.omfgdevelop.falloutfullinfo.presentation.viewModel.MainFragmentViewModel
-import com.omfgdevelop.falloutfullinfo.presentation.viewModel.MainViewModelFactory
+import com.omfgdevelop.falloutfullinfo.presentation.viewModel.ViewModelFactory
 import kotlinx.coroutines.launch
+
 
 class MainFragment : Fragment() {
 
@@ -31,12 +33,13 @@ class MainFragment : Fragment() {
 
 
     private val viewModelFactory by lazy {
-        MainViewModelFactory(requireActivity().application)
+        ViewModelFactory(requireActivity().application)
     }
 
     private val viewModel: MainFragmentViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[MainFragmentViewModel::class.java]
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +57,7 @@ class MainFragment : Fragment() {
         setViews()
     }
 
+
     private fun setViews() {
         with(binding) {
             recyclerView = rvContent
@@ -65,30 +69,34 @@ class MainFragment : Fragment() {
                         run {
                             with(holder.itemView) {
                                 findViewById<TextView>(android.R.id.text1).text = item.name
-                                findViewById<TextView>(android.R.id.text1).setTextColor(ContextCompat.getColor(requireContext(),
-                                    R.color.monitor_green_dark))
-                            }
-                            holder.itemView.setOnClickListener(object : OnClickListener {
-                                override fun onClick(p0: View?) {
-                                    Toast.makeText(
+                                findViewById<TextView>(android.R.id.text1).setTextColor(
+                                    ContextCompat.getColor(
                                         requireContext(),
-                                        "$item.name clicked",
-                                        Toast.LENGTH_SHORT
+                                        R.color.monitor_green_dark
                                     )
-                                        .show()
+                                )
+                                setOnClickListener {
+                                    findNavController().navigate(
+                                        MainFragmentDirections.navigateFromMainFragmentToCategoryFragment(
+                                            item.id
+                                        )
+                                    )
                                 }
-
-                            })
+                            }
                         }
                     }) {}.apply {
                     lifecycle.coroutineScope.launch {
                         viewModel?.getAllGames()?.collect() {
                             submitList(it)
                         }
-//                        submitList(listOf(Game(1,"name")))
                     }
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

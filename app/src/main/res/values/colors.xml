@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="monitor_green">#00FF00</color>
     <color name="monitor_green_dark">#8300FF00</color>
+    <color name="monitor_green_background_dark_1_percent">#0300FF00</color>
+    <color name="monitor_green_background_dark_5_percent">#0D00FF00</color>
 </resources>

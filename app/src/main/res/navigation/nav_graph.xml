@@ -8,22 +8,24 @@
 
     <fragment
         android:id="@+id/MainFragment"
-        android:name="com.omfgdevelop.falloutfullinfo.presentation.MainFragment"
+        android:name="com.omfgdevelop.falloutfullinfo.presentation.fragment.MainFragment"
         android:label="@string/welcome_to_fallout_full_info"
         tools:layout="@layout/fragment_main">
 
-        <!--        <action-->
-        <!--            android:id="@+id/action_Main"-->
-        <!--            app:destination="@id/MainFragment" />-->
+        <action
+            android:id="@+id/navigate_from_Main_fragment_to_category_fragment"
+            app:destination="@id/CategoryFragment" />
     </fragment>
-    <!--    <fragment-->
-    <!--        android:id="@+id/SecondFragment"-->
-    <!--        android:name="com.omfgdevelop.falloutfullinfo.SecondFragment"-->
-    <!--        android:label="@string/second_fragment_label"-->
-    <!--        tools:layout="@layout/fragment_second">-->
+    <fragment
+        android:id="@+id/CategoryFragment"
+        android:name="com.omfgdevelop.falloutfullinfo.presentation.fragment.CategoryFragment"
+        tools:layout="@layout/fragment_category">
+        <argument
+            android:name="game_id"
+            app:argType="long" />
 
-    <!--        <action-->
-    <!--            android:id="@+id/action_SecondFragment_to_FirstFragment"-->
-    <!--            app:destination="@id/FirstFragment" />-->
-    <!--    </fragment>-->
+        <!--            <action-->
+        <!--                android:id="@+id/action_SecondFragment_to_FirstFragment"-->
+        <!--                app:destination="@id/FirstFragment" />-->
+    </fragment>
 </navigation>
