@@ -9,7 +9,7 @@
     </style>
 
     <style name="GreenTextFallout.Dark.20" parent="GreenTextFallout.20">
-        <item name="android:textColor">#8300FF00</item>
+        <item name="android:textColor">@color/monitor_green_dark</item>
     </style>
 
     <style name="GreenTextFallout.Dark.16" parent="GreenTextFallout.Dark.20">
@@ -18,5 +18,16 @@
 
     <style name="GreenTextFallout.Dark.12" parent="GreenTextFallout.Dark.20">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="GreenDrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/monitor_green_dark</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Theme.FalloutFullInfo">
+        <item name="android:foreground">@color/monitor_green_background_dark_5_percent</item>
+        <item name="android:background">@android:color/black</item>
+        <item name="android:textColor">@color/monitor_green_dark</item>
     </style>
 </resources>

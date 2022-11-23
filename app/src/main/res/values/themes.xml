@@ -1,9 +1,16 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.FalloutFullInfo" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.FalloutFullInfo" parent="Base.Theme.FalloutFullInfo" />
+    <style name="Theme.FalloutFullInfo" parent="Base.Theme.FalloutFullInfo">
+
+        <!-- This will change drawer icon -->
+        <item name="colorControlNormal">@color/monitor_green_dark</item>
+        <item name="colorOnPrimary">@color/monitor_green_dark</item>
+        <!-- background of the  -->
+        <!-- <item name="android:background">@color/color_primary</item> -->
+    </style>
 </resources>

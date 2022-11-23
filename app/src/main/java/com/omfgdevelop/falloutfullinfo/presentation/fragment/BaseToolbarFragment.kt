@@ -69,4 +69,5 @@ abstract class BaseToolbarFragment<T : AndroidViewModel, B>(clazz: Class<T>) : F
         _binding = null
     }
 
+
 }

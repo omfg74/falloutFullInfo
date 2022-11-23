@@ -48,7 +48,7 @@ class CategoryFragment :
         viewModel.gameType = args.gameId
         super.onViewCreated(view, savedInstanceState)
 
-        setFragmentResultListener(SkillListFragment.CATEGORY) { key, bundle ->
+        setFragmentResultListener(ItemListFragment.CATEGORY) { key, bundle ->
             key.length
             if (bundle.getBundle("category") != null) {
                 viewModel.currentCategory = bundle.getParcelable("category") as Category?
@@ -106,7 +106,7 @@ class CategoryFragment :
 
                                     if (item.childType == ChildType.CATEGORY) {
                                         viewModel?.getChildCategory(item)
-                                    } else if (item.childType == ChildType.SKILL_DESCRIPTION) {
+                                    } else if (item.childType == ChildType.ITEM) {
                                         navigateToItemFragment(item)
                                     }
                                 }

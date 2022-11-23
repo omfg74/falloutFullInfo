@@ -16,14 +16,14 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:titleTextColor="@color/monitor_green_dark"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/Theme.FalloutFullInfo"
+            app:titleTextColor="@color/monitor_green_dark" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

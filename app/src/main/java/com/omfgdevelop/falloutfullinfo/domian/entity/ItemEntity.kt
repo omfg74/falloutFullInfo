@@ -1,10 +1,15 @@
 package com.omfgdevelop.falloutfullinfo.domian.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
+import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
-data class SkillWithCategory(
+@Entity(tableName = "skill")
+@Parcelize
+data class ItemEntity(
+    @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Long,
 
@@ -15,15 +20,9 @@ data class SkillWithCategory(
     val description: String,
 
     @ColumnInfo(name = "image_name")
-    val imageName: String,
+    val imageName: String?,
 
     @ColumnInfo(name = "parent_category")
-    val parentCategoryId: Long,
+    val parentCategoryId: Long?
 
-    @ColumnInfo(name = "category_id")
-    val categoryId: Long,
-    @ColumnInfo(name = "category_name")
-    val categoryName: String,
-    @ColumnInfo(name = "category_parent_id")
-    val parentId: Long?
-)
+) : Parcelable

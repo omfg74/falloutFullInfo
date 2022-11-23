@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.omfgdevelop.falloutfullinfo.presentation.viewModel.SkillListViewModel" />
+            type="com.omfgdevelop.falloutfullinfo.presentation.viewModel.ItemListViewModel" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

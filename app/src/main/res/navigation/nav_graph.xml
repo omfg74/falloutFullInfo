@@ -26,11 +26,11 @@
 
                     <action
                         android:id="@+id/action_navigate_from_category_fragment_to_skill_list_frgmant"
-                        app:destination="@id/SkillListFragment" />
+                        app:destination="@id/ItemListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SkillListFragment"
-        android:name="com.omfgdevelop.falloutfullinfo.presentation.fragment.SkillListFragment"
+        android:id="@+id/ItemListFragment"
+        android:name="com.omfgdevelop.falloutfullinfo.presentation.fragment.ItemListFragment"
         tools:layout="@layout/fragment_skill_list">
         <argument
             android:name="game_id"
@@ -38,6 +38,21 @@
         <argument
             android:name="category"
             app:argType="com.omfgdevelop.falloutfullinfo.domian.entity.Category" />
+        <action
+            android:id="@+id/action_navigate_from_item_list_fragment_to_item_fragment"
+            app:destination="@id/ItemFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/ItemFragment"
+        android:name="com.omfgdevelop.falloutfullinfo.presentation.fragment.ItemFragment"
+        tools:layout="@layout/fragment_item">
+        <argument
+            android:name="game_id"
+            app:argType="long" />
+        <argument
+            android:name="item"
+            app:argType="com.omfgdevelop.falloutfullinfo.domian.entity.ItemWithCategory" />
 
     </fragment>
 </navigation>

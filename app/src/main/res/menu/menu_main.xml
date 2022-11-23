@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.omfgdevelop.falloutfullinfo.MainActivity">
     <item
+
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/about"
+        android:icon="@drawable/ic_baseline_info_24"
+        app:showAsAction="always" />
 </menu>
