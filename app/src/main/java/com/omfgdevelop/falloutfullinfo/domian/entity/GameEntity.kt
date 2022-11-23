@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "game")
-data class Game(
+data class GameEntity(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "game_id", index = true)

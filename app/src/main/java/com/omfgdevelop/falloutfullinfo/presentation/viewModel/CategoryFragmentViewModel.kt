@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.omfgdevelop.falloutfullinfo.App
 import com.omfgdevelop.falloutfullinfo.domian.entity.Category
-import com.omfgdevelop.falloutfullinfo.domian.entity.Game
+import com.omfgdevelop.falloutfullinfo.domian.entity.GameEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -52,7 +52,7 @@ class CategoryFragmentViewModel(application: Application) : AndroidViewModel(app
     }
 
 
-    fun getSelectedGame(gameId: Long): Flow<Game> = gameRepository.findGameById(gameId)
+    fun getSelectedGame(gameId: Long): Flow<GameEntity> = gameRepository.findGameById(gameId)
 
     fun getLoadBack() {
         viewModelScope.launch {

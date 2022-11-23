@@ -6,12 +6,23 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.omfgdevelop.falloutfullinfo.domian.ChildTypeTypeConverter
+import com.omfgdevelop.falloutfullinfo.domian.dao.CategoryDao
+import com.omfgdevelop.falloutfullinfo.domian.dao.GameDao
+import com.omfgdevelop.falloutfullinfo.domian.dao.SkillDao
 import com.omfgdevelop.falloutfullinfo.domian.entity.*
 
-@Database(entities = arrayOf(Game::class, CategoryEntity::class,CategoryToGame::class), version = 1)
+@Database(
+    entities = arrayOf(
+        GameEntity::class,
+        CategoryEntity::class,
+        CategoryToGame::class,
+        SkillEntity::class
+    ), version = 1
+)
 @TypeConverters(value = [ChildTypeTypeConverter::class])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao
+    abstract fun skillDao(): SkillDao
     abstract fun categoryDao(): CategoryDao
 
     companion object {

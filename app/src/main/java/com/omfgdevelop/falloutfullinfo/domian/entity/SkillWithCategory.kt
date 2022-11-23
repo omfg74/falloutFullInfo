@@ -1,12 +1,10 @@
 package com.omfgdevelop.falloutfullinfo.domian.entity
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
+import androidx.room.Embedded
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "skill")
-data class SkillEntity(
-    @PrimaryKey
+data class SkillWithCategory(
     @ColumnInfo(name = "id")
     val id: Long,
 
@@ -17,9 +15,15 @@ data class SkillEntity(
     val description: String,
 
     @ColumnInfo(name = "image_name")
-    val imageName: String?,
+    val imageName: String,
 
     @ColumnInfo(name = "parent_category")
-    val parentCategoryId: Long?
+    val parentCategoryId: Long,
 
+    @ColumnInfo(name = "category_id")
+    val categoryId: Long,
+    @ColumnInfo(name = "category_name")
+    val categoryName: String,
+    @ColumnInfo(name = "category_parent_id")
+    val parentId: Long?
 )

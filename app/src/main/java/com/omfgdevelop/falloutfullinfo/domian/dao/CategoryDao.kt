@@ -1,9 +1,10 @@
-package com.omfgdevelop.falloutfullinfo.domian.entity
+package com.omfgdevelop.falloutfullinfo.domian.dao
 
 import kotlinx.coroutines.flow.Flow
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import com.omfgdevelop.falloutfullinfo.domian.entity.Category
 
 @Dao
 abstract class CategoryDao {

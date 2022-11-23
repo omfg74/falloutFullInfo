@@ -1,29 +1,42 @@
 package com.omfgdevelop.falloutfullinfo.presentation.fragment
 
+import android.annotation.SuppressLint
+import android.content.res.AssetManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omfgdevelop.falloutfullinfo.R
 import com.omfgdevelop.falloutfullinfo.databinding.FragmentSkillListBinding
-import com.omfgdevelop.falloutfullinfo.domian.entity.Category
-import com.omfgdevelop.falloutfullinfo.domian.entity.SkillEntity
+import com.omfgdevelop.falloutfullinfo.domian.entity.SkillWithCategory
 import com.omfgdevelop.falloutfullinfo.presentation.view.adapter.GenericListAdapter
 import com.omfgdevelop.falloutfullinfo.presentation.viewModel.SkillListViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.io.InputStream
+
 
 class SkillListFragment :
     BaseToolbarFragment<SkillListViewModel, FragmentSkillListBinding>(SkillListViewModel::class.java) {
 
     private lateinit var recyclerView: RecyclerView
 
-    private lateinit var rvAdapter: GenericListAdapter<SkillEntity>
+    private lateinit var rvAdapter: GenericListAdapter<SkillWithCategory>
+
+    private val args by navArgs<SkillListFragmentArgs>()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSkillListBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,18 +45,56 @@ class SkillListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.categoryId = args.categoryId
+        viewModel.gameId = args.gameId
         super.onViewCreated(view, savedInstanceState)
     }
 
+    @SuppressLint("ResourceType")
     override fun setViews() {
         with(binding) {
             recyclerView = rvSkillList
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(requireContext())
-                rvAdapter = object : GenericListAdapter<SkillEntity>(
-                    R.layout.item_skill,
-                    bind = { item, holder, itemCount -> }) {}.apply { }
+                rvAdapter = object :
+                    GenericListAdapter<SkillWithCategory>(R.layout.item_skill,
+                        bind = { item, holder, _ ->
+                            with(holder.itemView) {
+                                findViewById<TextView>(R.id.tv_title).text = item.name
+                                findViewById<TextView>(R.id.tv_skill_description).text =
+                                    item.description
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    findViewById<ImageView>(R.id.iv_skill_image).setImageBitmap(
+                                        getBitmapFromAssets(item.imageName)
+                                    )
+                                }
+                            }
+                        }) {}.apply {
+                    lifecycleOwner?.lifecycleScope?.launch {
+                        viewModel?.getSkillListUseCase?.let { it(viewModel?.categoryId!!) }
+                            ?.collect() {
+                                submitList(it)
+                            }
+
+                    }
+                }
+                adapter = rvAdapter
             }
         }
+    }
+
+    @Throws(IOException::class)
+    suspend fun getBitmapFromAssets(fileName: String?): Bitmap? {
+        val assetManager: AssetManager = requireActivity().assets
+        val istr: InputStream = assetManager.open(fileName ?: "")
+        val bitmap = BitmapFactory.decodeStream(istr)
+        withContext(Dispatchers.IO) {
+            istr.close()
+        }
+        return bitmap
+    }
+
+    override fun handleBackAction() {
+        super.handleBackAction()
     }
 }

@@ -24,8 +24,20 @@
             android:name="game_id"
             app:argType="long" />
 
-        <!--            <action-->
-        <!--                android:id="@+id/action_SecondFragment_to_FirstFragment"-->
-        <!--                app:destination="@id/FirstFragment" />-->
+                    <action
+                        android:id="@+id/action_navigate_from_category_fragment_to_skill_list_frgmant"
+                        app:destination="@id/SkillListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SkillListFragment"
+        android:name="com.omfgdevelop.falloutfullinfo.presentation.fragment.SkillListFragment"
+        tools:layout="@layout/fragment_skill_list">
+        <argument
+            android:name="game_id"
+            app:argType="long" />
+        <argument
+            android:name="category_id"
+            app:argType="long" />
+
     </fragment>
 </navigation>

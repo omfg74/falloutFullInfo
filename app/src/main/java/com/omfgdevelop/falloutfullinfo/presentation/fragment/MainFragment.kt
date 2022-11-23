@@ -1,12 +1,10 @@
 package com.omfgdevelop.falloutfullinfo.presentation.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.omfgdevelop.falloutfullinfo.R
 import com.omfgdevelop.falloutfullinfo.databinding.FragmentMainBinding
-import com.omfgdevelop.falloutfullinfo.domian.entity.Game
+import com.omfgdevelop.falloutfullinfo.domian.entity.GameEntity
 import com.omfgdevelop.falloutfullinfo.presentation.view.adapter.GenericListAdapter
 import com.omfgdevelop.falloutfullinfo.presentation.viewModel.MainFragmentViewModel
 import com.omfgdevelop.falloutfullinfo.presentation.viewModel.ViewModelFactory
@@ -62,7 +60,7 @@ class MainFragment : Fragment() {
             recyclerView = rvContent
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(requireContext())
-                adapter = object : GenericListAdapter<Game>(
+                adapter = object : GenericListAdapter<GameEntity>(
                     android.R.layout.simple_list_item_2,
                     bind = { item, holder, _ ->
                         run {
