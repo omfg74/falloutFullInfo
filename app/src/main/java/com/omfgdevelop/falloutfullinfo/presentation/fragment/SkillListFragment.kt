@@ -68,9 +68,8 @@ class SkillListFragment :
                         bind = { item, holder, _ ->
                             with(holder.itemView) {
                                 findViewById<TextView>(R.id.tv_title).text = item.name
-                                findViewById<TextView>(R.id.tv_skill_description).text =
-                                    item.description
                                 viewLifecycleOwner.lifecycleScope.launch {
+                                    @Suppress("BlockingMethodInNonBlockingContext")
                                     findViewById<ImageView>(R.id.iv_skill_image).setImageBitmap(
                                         getBitmapFromAssets(item.imageName)
                                     )

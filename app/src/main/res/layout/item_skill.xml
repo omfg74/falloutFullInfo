@@ -2,21 +2,32 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     android:background="@color/black">
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/monitor_green_background_dark_5_percent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/iv_skill_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
-        android:foreground="@color/monitor_green_background_dark_20_percent"
+        android:layout_width="96dp"
+        android:layout_height="84dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:foreground="@drawable/rounded_corner_image_foreground"
+        android:scaleType="fitXY"
         android:src="@drawable/strength"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,27 +35,15 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="12dp"
         android:textAppearance="@style/GreenTextFallout.Dark.16"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/iv_skill_image"
-        app:layout_constraintTop_toTopOf="@id/iv_skill_image"
-        app:layout_constraintVertical_bias="0"
-        tools:text="Strength | Сила" />
-
-    <TextView
-        android:id="@+id/tv_skill_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="8dp"
-        android:textAppearance="@style/GreenTextFallout.Dark.12"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/iv_skill_image"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@id/iv_skill_image"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        tools:text="Главная функция силы в игре - максимальный вес инвентаря и использование различных видов вооружения. Силы в 6-7 хватит для использования всех видов оружия. Если уменьшить силу меньше 5, то возникнут большие проблемы с ношением необходимых предметов в инвентаре. Кроме этого в игре встречаются двери, которые можно открыть только имея силу больше 8." />
+        app:layout_constraintTop_toTopOf="@id/iv_skill_image"
+        tools:text="Strength | Сила" />
+
 
     <View
         android:layout_width="0dp"
