@@ -7,12 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.omfgdevelop.falloutfullinfo.App
 import com.omfgdevelop.falloutfullinfo.data.SkillRepositoryImpl
+import com.omfgdevelop.falloutfullinfo.domian.entity.Category
 import com.omfgdevelop.falloutfullinfo.domian.entity.SkillWithCategory
 import com.omfgdevelop.falloutfullinfo.domian.repository.SkillRepository
 import com.omfgdevelop.falloutfullinfo.domian.usecases.GetSkillListUseCase
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlin.reflect.KProperty
 
 class SkillListViewModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -30,11 +29,11 @@ class SkillListViewModel(private val app: Application) : AndroidViewModel(app) {
     val getSkillListUseCase: GetSkillListUseCase
         get() = _getSkillListUseCase
 
-    var categoryId: Long = 0
+    lateinit var category: Category
 
     fun getSkillList() {
         viewModelScope.launch {
-            getSkillListUseCase(categoryId).collect() {
+            getSkillListUseCase(category.category.id).collect() {
                 _skillList.value = it
             }
         }

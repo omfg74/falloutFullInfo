@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +31,10 @@ import java.io.InputStream
 class SkillListFragment :
     BaseToolbarFragment<SkillListViewModel, FragmentSkillListBinding>(SkillListViewModel::class.java) {
 
+    companion object {
+        const val CATEGORY: String = "CATEGORY"
+    }
+
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var rvAdapter: GenericListAdapter<SkillWithCategory>
@@ -45,9 +51,10 @@ class SkillListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.categoryId = args.categoryId
+        viewModel.category = args.category
         viewModel.gameId = args.gameId
         super.onViewCreated(view, savedInstanceState)
+        setToolBarTitle(viewModel.category.category.name)
     }
 
     @SuppressLint("ResourceType")
@@ -70,8 +77,12 @@ class SkillListFragment :
                                 }
                             }
                         }) {}.apply {
-                    lifecycleOwner?.lifecycleScope?.launch {
-                        viewModel?.getSkillListUseCase?.let { it(viewModel?.categoryId!!) }
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel?.getSkillListUseCase?.let {
+                            it(
+                                viewModel?.category?.category?.id ?: return@launch
+                            )
+                        }
                             ?.collect() {
                                 submitList(it)
                             }
@@ -95,6 +106,16 @@ class SkillListFragment :
     }
 
     override fun handleBackAction() {
+        setFragmentResult(
+            CATEGORY,
+            bundleOf(Pair("category", viewModel.category), Pair("game_id", viewModel.gameId))
+        )
         super.handleBackAction()
+    }
+
+    private fun setToolBarTitle(name: String?) {
+        with(toolbar) {
+            title = name
+        }
     }
 }

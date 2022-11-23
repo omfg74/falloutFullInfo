@@ -17,9 +17,8 @@ class CategoryFragmentViewModel(application: Application) : AndroidViewModel(app
     val parentCategoryId: Long?
         get() = _parentCategoryId
 
-    private var _currentId: Long? = null
-    val currentId: Long?
-        get() = _currentId
+    //    private var _currentCategory: Category? = null
+    var currentCategory: Category? = null
 
     private var _parentCategory: MutableLiveData<Category?> = MutableLiveData()
     val parentCategory: LiveData<Category?>
@@ -31,26 +30,32 @@ class CategoryFragmentViewModel(application: Application) : AndroidViewModel(app
 
     private val gameRepository = (application as App).dataBase.gameDao()
 
-    private val _currentCategory: MutableLiveData<List<Category>> = MutableLiveData()
+    private val _currentCategoryList: MutableLiveData<List<Category>> = MutableLiveData()
 
-    val currentCategory: LiveData<List<Category>>
-        get() = _currentCategory
+    val currentCategoryList: LiveData<List<Category>>
+        get() = _currentCategoryList
 
 
     fun getChildCategory(category: Category?) {
-        _currentId = category?.category?.id
+        currentCategory = category
         _parentCategory.value = category
         viewModelScope.launch {
             repository.getChildCategoryList(category?.category?.id, gameType).collect() {
-                _currentCategory.value = it
+                _currentCategoryList.value = it
                 _parentCategoryId = if (it.isNotEmpty()) {
                     it[0].category.parentId
-                } else currentId
+                } else null
             }
         }
-
     }
 
+    fun getCategoryById(id: Long) {
+        viewModelScope.launch {
+            repository.getCategoryById(_parentCategory.value?.category?.id, gameType).collect() {
+                currentCategory
+            }
+        }
+    }
 
     fun getSelectedGame(gameId: Long): Flow<GameEntity> = gameRepository.findGameById(gameId)
 

@@ -2,8 +2,11 @@ package com.omfgdevelop.falloutfullinfo.presentation.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -44,11 +47,19 @@ class CategoryFragment :
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.gameType = args.gameId
         super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener(SkillListFragment.CATEGORY) { key, bundle ->
+            key.length
+            if (bundle.getBundle("category") != null) {
+                viewModel.currentCategory = bundle.getParcelable("category") as Category?
+            }
+        }
+        setViews()
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        viewModel.currentCategory.observe(
+        viewModel.currentCategoryList.observe(
             viewLifecycleOwner
         ) { t ->
             rvAdapter.submitList(t)
@@ -101,7 +112,7 @@ class CategoryFragment :
                                 }
                             }
                         }) {}.apply {
-                        viewModel?.getChildCategory(null)
+                        viewModel?.getChildCategory(viewModel?.currentCategory)
                     }
                 adapter = rvAdapter
             }
@@ -112,7 +123,7 @@ class CategoryFragment :
         findNavController().navigate(
             CategoryFragmentDirections.actionNavigateFromCategoryFragmentToSkillListFrgmant(
                 viewModel.gameType,
-                category.category.id
+                category
             )
         )
     }

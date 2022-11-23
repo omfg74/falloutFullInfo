@@ -1,8 +1,13 @@
 package com.omfgdevelop.falloutfullinfo.domian.entity
 
-import androidx.room.*
+import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.TypeConverters
 import com.omfgdevelop.falloutfullinfo.domian.ChildTypeTypeConverter
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Category(
     @Embedded
     val category: CategoryEntity,
@@ -12,4 +17,4 @@ data class Category(
     val childType: ChildType
 
 
-)
+) : Parcelable

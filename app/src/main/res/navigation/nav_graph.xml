@@ -36,8 +36,8 @@
             android:name="game_id"
             app:argType="long" />
         <argument
-            android:name="category_id"
-            app:argType="long" />
+            android:name="category"
+            app:argType="com.omfgdevelop.falloutfullinfo.domian.entity.Category" />
 
     </fragment>
 </navigation>
