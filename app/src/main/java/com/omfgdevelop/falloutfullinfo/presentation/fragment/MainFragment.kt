@@ -1,5 +1,6 @@
 package com.omfgdevelop.falloutfullinfo.presentation.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,16 +55,16 @@ class MainFragment : Fragment() {
         setViews()
     }
 
-
+    @SuppressLint("ResourceType")
     private fun setViews() {
         with(binding) {
             recyclerView = rvContent
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(requireContext())
-                adapter = object : GenericListAdapter<GameEntity>(
-                    android.R.layout.simple_list_item_2,
-                    bind = { item, holder, _ ->
-                        run {
+                adapter =
+                    object : GenericListAdapter<GameEntity>(
+                        android.R.layout.simple_list_item_2,
+                        bind = { item, holder, _ ->
                             with(holder.itemView) {
                                 findViewById<TextView>(android.R.id.text1).text = item.name
                                 findViewById<TextView>(android.R.id.text1).setTextColor(
@@ -80,14 +81,13 @@ class MainFragment : Fragment() {
                                     )
                                 }
                             }
-                        }
-                    }) {}.apply {
-                    lifecycle.coroutineScope.launch {
-                        viewModel?.getAllGames()?.collect() {
-                            submitList(it)
+                        }) {}.apply {
+                        lifecycle.coroutineScope.launch {
+                            viewModel?.getAllGames()?.collect() {
+                                submitList(it)
+                            }
                         }
                     }
-                }
             }
         }
     }

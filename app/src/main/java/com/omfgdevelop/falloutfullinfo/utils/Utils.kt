@@ -13,12 +13,18 @@ object Utils {
 
     @Throws(IOException::class)
     suspend fun getBitmapFromAssets(fileName: String?, app: Application): Bitmap? {
-        val assetManager: AssetManager = app.assets
-        val istr: InputStream = assetManager.open(fileName ?: "")
-        val bitmap = BitmapFactory.decodeStream(istr)
-        withContext(Dispatchers.IO) {
-            istr.close()
+        try {
+            val assetManager: AssetManager = app.assets
+            val istr: InputStream = assetManager.open(fileName?.trim() ?: "")
+            val bitmap = BitmapFactory.decodeStream(istr)
+            withContext(Dispatchers.IO) {
+                istr.close()
+            }
+            return bitmap
+        } catch (e: Exception) {
+            e.printStackTrace();
         }
-        return bitmap
+        return null;
+
     }
 }
