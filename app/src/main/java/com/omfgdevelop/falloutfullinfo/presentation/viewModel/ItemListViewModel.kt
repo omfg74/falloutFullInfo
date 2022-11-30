@@ -10,7 +10,7 @@ import com.omfgdevelop.falloutfullinfo.data.ItemRepositoryImpl
 import com.omfgdevelop.falloutfullinfo.domian.entity.Category
 import com.omfgdevelop.falloutfullinfo.domian.repository.CategoryRepository
 import com.omfgdevelop.falloutfullinfo.domian.repository.ItemRepository
-import com.omfgdevelop.falloutfullinfo.domian.usecases.GetSkillListUseCase
+import com.omfgdevelop.falloutfullinfo.domian.usecases.GetItemListUseCase
 import kotlinx.coroutines.launch
 
 class ItemListViewModel(private val app: Application) : AndroidViewModel(app) {
@@ -25,8 +25,8 @@ class ItemListViewModel(private val app: Application) : AndroidViewModel(app) {
         CategoryRepositoryImpl.create((app as App).dataBase.categoryDao())
 
 
-    private val _getSkillListUseCase by lazy { GetSkillListUseCase(getItemRepository) }
-    val getSkillListUseCase: GetSkillListUseCase
+    private val _getSkillListUseCase by lazy { GetItemListUseCase(getItemRepository) }
+    val getSkillListUseCase: GetItemListUseCase
         get() = _getSkillListUseCase
 
     val category: MutableLiveData<Category> = MutableLiveData()

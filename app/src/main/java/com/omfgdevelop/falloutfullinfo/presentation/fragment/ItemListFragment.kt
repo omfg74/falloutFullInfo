@@ -88,7 +88,7 @@ class ItemListFragment :
                                 findViewById<TextView>(R.id.tv_title).text = item.name
                                 viewLifecycleOwner.lifecycleScope.launch {
                                     @Suppress("BlockingMethodInNonBlockingContext")
-                                    findViewById<ImageView>(R.id.iv_skill_image).setImageBitmap(
+                                    findViewById<ImageView>(R.id.iv_item_image).setImageBitmap(
                                         Utils.getBitmapFromAssets(
                                             item.imageName,
                                             requireActivity().application
