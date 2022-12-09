@@ -35,7 +35,7 @@ class ItemFragmentViewModel(private val app: Application) : AndroidViewModel(app
 
     fun loadItem() {
         viewModelScope.launch {
-            getItemUseCase(itemId).collect() {
+            getItemUseCase(itemId, gameId).collect() {
                 item = it
                 imageResource.set(
                     Utils.getBitmapFromAssets(it.imageName, app)?.toDrawable(app.resources)

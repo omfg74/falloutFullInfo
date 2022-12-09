@@ -118,7 +118,7 @@ class ItemListFragment :
     private fun updateList() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getSkillListUseCase(
-                viewModel.category.value?.category?.id ?: return@launch
+                viewModel.category.value?.category?.id ?: return@launch, viewModel.gameId
             ).collect() {
                 rvAdapter.submitList(it)
             }

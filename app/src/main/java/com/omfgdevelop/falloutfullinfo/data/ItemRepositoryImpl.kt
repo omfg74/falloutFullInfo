@@ -20,11 +20,14 @@ object ItemRepositoryImpl : ItemRepository {
         return itemRepository!!
     }
 
-    override suspend fun getItemListByCategoryId(categoryId: Long): Flow<List<ItemWithCategory>> {
-        return dao.getItemListByCategoryId(categoryId)
+    override suspend fun getItemListByCategoryId(
+        categoryId: Long,
+        gameId: Long
+    ): Flow<List<ItemWithCategory>> {
+        return dao.getItemListByCategoryId(categoryId, gameId)
     }
 
-    override suspend fun getItemById(id: Long): Flow<ItemEntity> {
-        return dao.getItemById(id)
+    override suspend fun getItemById(id: Long, gameId: Long): Flow<ItemEntity> {
+        return dao.getItemById(id, gameId)
     }
 }

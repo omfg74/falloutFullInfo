@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class GetItemUseCase(private val itemRepository: ItemRepository) {
 
-    suspend operator fun invoke(categoryId: Long): Flow<ItemEntity> {
-        return itemRepository.getItemById(categoryId)
+    suspend operator fun invoke(categoryId: Long, gameId: Long): Flow<ItemEntity> {
+        return itemRepository.getItemById(categoryId, gameId)
     }
 }

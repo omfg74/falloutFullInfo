@@ -9,17 +9,15 @@ import com.omfgdevelop.falloutfullinfo.domian.ChildTypeTypeConverter
 import com.omfgdevelop.falloutfullinfo.domian.dao.CategoryDao
 import com.omfgdevelop.falloutfullinfo.domian.dao.GameDao
 import com.omfgdevelop.falloutfullinfo.domian.dao.ItemDao
-import com.omfgdevelop.falloutfullinfo.domian.entity.CategoryEntity
-import com.omfgdevelop.falloutfullinfo.domian.entity.CategoryToGame
-import com.omfgdevelop.falloutfullinfo.domian.entity.GameEntity
-import com.omfgdevelop.falloutfullinfo.domian.entity.ItemEntity
+import com.omfgdevelop.falloutfullinfo.domian.entity.*
 
 @Database(
     entities = arrayOf(
         GameEntity::class,
         CategoryEntity::class,
         CategoryToGame::class,
-        ItemEntity::class
+        ItemEntity::class,
+        ItemToGame::class
     ), version = 1
 )
 @TypeConverters(value = [ChildTypeTypeConverter::class])
